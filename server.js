@@ -4,10 +4,10 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors())
-app.set('port', process.env.PORT || 3001);
+const PORT = process.env.PORT || 3001
 app.locals.title = 'BYOB';
 
-app.get('/', (req,res) => {res.send('hi')})
+
 
 
 
@@ -28,8 +28,8 @@ app.get('/', (req,res) => {res.send('hi')})
 // Delete senator
 
 
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on http://localhost:${app.get('port')}.`);
+app.listen(PORT, () => {
+  console.log(`${app.locals.title} is running on ${PORT}.`);
 });
 
 
