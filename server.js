@@ -18,7 +18,7 @@ app.get('/api/v1/govt/bills', (req, res) => {
   
 })
 
-// Get bills by sponspor name
+// Get bills by sponsor id
 app.get('/api/v1/govt/bills:id', (req, res) => {
  
 })
@@ -28,7 +28,7 @@ app.get('/api/v1/govt/senators', (req, res) => {
   
 })
 
-// Get senator by name
+// Get senator by id
 app.get('/api/v1/govt/senators/:id', (req, res) => {
   
 })
@@ -52,7 +52,6 @@ app.delete('/api/v1/govt/bills', (req, res) => {
 app.delete('/api/v1/govt/senators', (req, res) => {
   
 })
-
 
 
 app.listen(PORT, () => {

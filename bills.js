@@ -1,4 +1,4 @@
-[
+const bills = [
     {
       "bill_id": "s929-116",
       "bill_slug": "s929",
@@ -814,3 +814,5 @@
       "latest_major_action": "Message on Senate action sent to the House."
     }
 ]
+
+module.exports =  bills 
