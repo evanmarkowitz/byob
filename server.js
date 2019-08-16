@@ -74,13 +74,51 @@ app.get('/api/v1/govt/senator/:id', (request, response) => {
 })
 
 // Post bill
-app.post('/api/v1/govt/bills', (req, res) => {
-  
+app.post('/api/v1/govt/bills', (request, response) => {
+  const bill = request.body
+  for(let requiredParameter of ['number', 'title', 'url', 'committees', 'senator_key']){
+    if(!bill[requiredParameter]) {
+      return response.status(422).send({error: `expected format {
+        number: <string>,
+        title: <string>,
+        url: <string>,
+        committees: <string>,
+        senator_key: <integer>
+      }
+      `})
+    }
+  }
+  database('bills').insert(bill, 'id')
+  .then(bill => {
+    response.status(200).json({ id: bill[0]})
+  })
+  .catch(error => {
+    response.status(500).json({ error });
+  });
 })
 
 // Post senator
-app.post('/api/v1/govt/senators', (req, res) => {
-  
+app.post('/api/v1/govt/senator', (request, response) => {
+  const senator = request.body
+  for(let requiredParameter of ['first_name', 'last_name', 'total_votes', 'contact', 'state', 'party']) {
+    if(!senator[requiredParameter]) {
+      return response.status(422).send({error: 
+        ` expected format { first_name: <varchar>,
+        last_name: <varchar>,
+        total_votes: <varchar>,
+        contact: <varchar>,
+        party: <varchar>}
+        You are missing a ${requiredParameter} property`
+      })
+    }
+  }
+  database('senator').insert(senator, 'id')
+  .then(senator => {
+    response.status(201).json({ id: senator[0]})
+  })
+  .catch(error => {
+    response.status(500).json({ error });
+  });
 })
 
 // Delete bill

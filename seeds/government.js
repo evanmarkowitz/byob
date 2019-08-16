@@ -11,7 +11,6 @@ const createSeantors = (knex, senator) => {
   }, 'id')
   .then(senatorId => {
     let billPromises = [];
-
     senator.bills.forEach(bill => {
       billPromises.push(
         createBills(knex, {
