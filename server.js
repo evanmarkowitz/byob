@@ -122,13 +122,41 @@ app.post('/api/v1/govt/senator', (request, response) => {
 })
 
 // Delete bill
-app.delete('/api/v1/govt/bills', (req, res) => {
-  
+app.delete('/api/v1/govt/bills/:id', (req, res) => {
+  const {id} = req.params
+  database('bills').where('id', id).del()
+  .then(bills => {
+    console.log(bills)
+    if(bills) {
+      res.status(200).json({Sucess: `You have deleted bill with id ${id}`})
+    } else {
+      res.status(400).json({
+        error: `Could not find bill with id ${id}`
+      })
+    }
+  })
+  .catch(error => {
+    res.status(500).json({ error });
+  });
 })
 
 // Delete senator
-app.delete('/api/v1/govt/senators', (req, res) => {
-  
+app.delete('/api/v1/govt/senator/:id', (req, res) => {
+  const { id } = req.params
+  database('senator').where('id', id).del()
+  .then(senator => {
+    if(senator) {
+      res.status(200).json({Sucess: `You have deleted senator with id ${id}`})
+    } else {
+      res.status(400).json({
+        error: `Could not find senator with id ${id}`
+      })
+    }
+  })
+  .catch(error => {
+    res.status(500).json({ error })
+  })
+ 
 })
 
 
