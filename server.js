@@ -28,19 +28,49 @@ app.get('/api/v1/govt/bills', (request, response) => {
 })
 
 // Get bills by sponsor id
-app.get('/api/v1/govt/bills:id', (req, res) => {
-  database('bills').where()
-
+app.get('/api/v1/govt/bills/:id', (request, res) => {
+  database('bills').where('senator_key', request.params.id).select()
+  .then(bills => {
+    if(bills.length) {
+      res.status(200).json(bills)
+    } else {
+      res.status(400).json({
+        error: `Could not find bill with id${request.params.id}`
+      })
+    }
+  })
+  .catch(error => {
+    res.status(500).json({ error });
+  });
 })
 
 // Get all senators 
-app.get('/api/v1/govt/senators', (req, res) => {
-  
+app.get('/api/v1/govt/senator', (request, response) => {
+  database('senator').select()
+  .then((senator) => {
+    response.status(200).json(senator);
+  })
+  .catch((error) => {
+    response.status(500).json({ error });
+  });
 })
+  
 
 // Get senator by id
-app.get('/api/v1/govt/senators/:id', (req, res) => {
-  
+app.get('/api/v1/govt/senator/:id', (request, response) => {
+  database('senator').where('id', request.params.id).select()
+    .then((senator) => {
+      if(senator.length) {
+        response.status(200).json(senator)
+      } else {
+        response.status(400).json({
+          error: `Could not find senator with id${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error });
+    });
 })
 
 // Post bill
