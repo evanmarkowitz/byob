@@ -29,13 +29,7 @@ app.get('/api/v1/govt/bills', (request, response) => {
 
 // Get bills by sponsor id
 app.get('/api/v1/govt/bills:id', (req, res) => {
-  database('bills').select()
-  .then((bills) => {
-    response.status(200).json(bills);
-  })
-  .catch((error) => {
-    response.status(500).json({ error });
-  });
+  database('bills').where()
 
 })
 
