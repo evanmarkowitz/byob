@@ -6,6 +6,9 @@ app.use(express.json());
 app.use(cors())
 const PORT = process.env.PORT || 3001
 app.locals.title = 'BYOB';
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
 
 app.get('/api/v1/govt', (req, res) => {
   res.send('its the govt!')
@@ -14,13 +17,26 @@ app.get('/api/v1/govt', (req, res) => {
 
 
 // Get All bills
-app.get('/api/v1/govt/bills', (req, res) => {
-  
+app.get('/api/v1/govt/bills', (request, response) => {
+  database('bills').select()
+    .then((bills) => {
+      response.status(200).json(bills);
+    })
+    .catch((error) => {
+      response.status(500).json({ error });
+    });
 })
 
 // Get bills by sponsor id
 app.get('/api/v1/govt/bills:id', (req, res) => {
- 
+  database('bills').select()
+  .then((bills) => {
+    response.status(200).json(bills);
+  })
+  .catch((error) => {
+    response.status(500).json({ error });
+  });
+
 })
 
 // Get all senators 

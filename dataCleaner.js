@@ -2,10 +2,8 @@ const members = require('./members.js')
 const bills = require('./bills.js')
 
 const cleanMembers = (members, bills) => {
-  const pMembers = members
-  const pBills = bills
 
-  let memWithBills =  pMembers.reduce((acc, senator) => {
+  let memWithBills =  members.reduce((acc, senator) => {
     senator.bills = []
     senatorName = `${senator.first_name} ${senator.last_name}`
     bills.forEach(bill => {
@@ -13,7 +11,6 @@ const cleanMembers = (members, bills) => {
         senator.bills.push(bill)
       }
     });
-    console.log(senator.bills)
     acc.push(senator)
     return acc
   },[])

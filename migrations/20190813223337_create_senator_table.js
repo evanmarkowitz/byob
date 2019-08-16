@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return promise.all([knex.schema.createTable('senator', (table) => {
+  return Promise.all([knex.schema.createTable('senator', (table) => {
       table.increments('id')
       table.varchar('first_name')
       table.varchar('last_name')
